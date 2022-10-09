@@ -1,0 +1,199 @@
+<!-- tiles 상속 -->
+{% extends "body.html" %}
+<!-- content -->
+{% block content %}
+
+<style>
+.register {width:600px; margin:0 auto; padding:15px 20px; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.2);}
+.register input {width:100%; padding:6px;}
+.register input[type=date] {line-height:18px;}
+.register input[type=button] {width:auto;}
+.register .center {display:flex; align-items:center;}
+.register .flex .contain {display:grid; grid-template-columns:1fr 3fr 1fr; margin-bottom:10px;}
+.register .flex .contain .item .check {height:100%; margin-left:10px; padding:5px 15px; background:#FF4F02; border:none; color:white; font-size:12px;}
+.register .flex .contain .item select {height:36px; padding:6px;}
+.register .submit {width:100%; height:36px; color:white; border:none; background:#FF4F02;}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var pwdCheck = false;
+    var emailCheck = false;
+
+    $(function(){
+        $('#chkBtn').click(function(){
+             $.ajax({
+                url:'memberIdchk?mid='+$('#mid').val(),
+                success:function(data){
+                    if(data === '0'){
+                      $('#target').html('사용 가능한 아이디입니다.');
+                      $('#target').css('color','blue');
+                    }else if(data === '1'){
+                      $('#target').html('이미 사용중인 아이디입니다.');
+                      $('#target').css('color','red');
+                    }else if(data === '2'){
+                      $('#target').html('아이디를 입력해주세요');
+                      $('#target').css('color','orange');
+                    }
+                }
+             });
+        });
+
+        $('#chkBtn2').click(function(){
+            var pwd1 = document.getElementById('mpwd').value;
+            var pwd2 = document.getElementById('mpwd2').value;
+            if(pwd1 != pwd2){
+                $('#target2').html('비밀번호가 일치하지 않습니다.');
+                $('#target2').css('color','red');
+                pwdCheck = false;
+            }else if(pwd1 == ""){
+                $('#target2').html('비밀번호를 입력해주세요.');
+                $('#target2').css('color','orange');
+                pwdCheck = false;
+            }else{
+                $('#target2').html('비밀번호가 일치합니다.');
+                $('#target2').css('color','blue');
+                pwdCheck = true;
+            }
+        });
+    });
+
+    function submitCheck(){
+        if(emailCheck&&pwdCheck){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    $(document).ready(function(){
+        $('#confirmBtn').click(function(){
+            $.ajax({
+                type:"GET",
+                url:"memberEmailchk",
+                data:{"sendEmail":$('#sendEmail').val()},
+                success : function(result){
+                    $('#checkChar').val(result);
+                    alert('인증번호가 전송되었습니다.');
+                },
+                error:function(a, b, c){
+                    alert('이메일 형식이 올바르지 않습니다.');
+                }
+            });
+        });
+
+        $('#confirmBtn2').click(function(){
+            if($('#checkChar').val()==$('#inputText').val()){
+                $('#target3').html('인증되었습니다.');
+                $('#target3').css('color','blue');
+                emailCheck = true;
+            }
+            else{
+                $('#target3').html('인증에 실패했습니다.');
+                $('#target3').css('color','red');
+                emailCheck=false;
+            }
+        });
+    });
+</script>
+
+<div id="content" class="container mt-5">
+    <h2 class="text-center">join</h2>
+    <div class="row container">
+        <h1 style="text-align: center">회원가입</h1>
+        <div class="register">
+            <form method="post" action="memberInsert" class="memberIn" onsubmit="return submitCheck();">
+                {% csrf_token %}
+                <div class="flex">
+                    <ul class="contain">
+                        <li class="item center">아이디</li>
+                        <li class="item">
+                            <input type="text" name="mid" id="mid">
+                        </li>
+                        <li class="item">
+                            <input type="button" value="중복확인" class="check" id="chkBtn">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center"></li>
+                        <li class="item center" id="target"></li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">비밀번호</li>
+                        <li class="item">
+                            <input type="password" name="mpwd" id="mpwd">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">비밀번호 확인</li>
+                        <li class="item">
+                            <input type="password" name="mpwd2" id="mpwd2">
+                        </li>
+                        <li class="item">
+                            <input type="button" value="비번확인" class="check" id="chkBtn2">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center"></li>
+                        <li class="item center" id="target2"></li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">이름</li>
+                        <li class="item">
+                            <input type="text" name="mname" id="mname">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">
+                            생년월일
+                        </li>
+                        <li class="item">
+                            <input type="date" name="mbirth" id="mbirth">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">
+                            성별
+                        </li>
+                        <li class="item">
+                            <select name="mgender" id="mgender">
+                                <option value="남자" selected>남자</option>
+                                <option value="여자">여자</option>
+                            </select>
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">이메일</li>
+                        <li class="item">
+                            <input type="hidden" id="checkChar" value="259yg2u9gy5u2">
+                            <input type="email" name="memail" id="sendEmail">
+                        </li>
+                        <li class="item">
+                            <input type="button" value="인증번호전송" class="check" id="confirmBtn">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center"></li>
+                        <li class="item">
+                            <input type="text" name="bunho" id="inputText">
+                        </li>
+                        <li class="item">
+                            <input type="button" value="인증완료" class="check" id="confirmBtn2">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center"></li>
+                        <li class="item center" id="target3"></li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center"></li>
+                        <li class="item">
+                            <input type="submit" value="가입하기" class="submit">
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content%}

@@ -1,0 +1,78 @@
+{% extends 'body.html' %}
+{% block content %}
+<link rel="stylesheet" href="/static/css/style.css">
+<div id="content" class="container mt-5">
+    <h3>총 <strong style="font-size:35px;">{{count}}</strong> 개의 맛있는 레시피가 있습니다. </h3><br>
+    <div >
+        <form method="post" action="">
+        {% csrf_token %}
+            <div class="carousel-item">
+                {% for e in list %}
+                <div class="owl-item" style="display: inline-block; width:24%; margin-bottom: 20px;">
+                    <a href="commDetail?bnum={{e.0}}" ><img src="/static/foodImg/{{e.3}}" class="d-block w-100 img-responsive"
+                         style="width:265px; height: 175px; border: 2px solid #ddd"></a>
+                    <div style="text-align:left; padding: 0px 0;">
+                        <span class="best_rcp_caption_buyer" style="display:inline-block; font-weight: 500; text-overflow:ellipsis; white-space:nowrap;
+                            overflow:hidden; width:230px; vertical-align: middle; color: #000">제목 : {{e.1}}</span><br>
+                        <span class="best_rcp_caption_buyer" style="vertical-align: middle;">작성자 : {{e.2}}</span> |
+                        <span class="best_rcp_caption_buyer" style="vertical-align: middle;">조회수 : {{e.4}}</span>
+                    </div>
+                    <div style="padding-top: 0px; margin-top: 0px;">
+                        <img src="/static/img/off.png" class="img_heart" id="{{e.0}}" name="img_btn">찜하기
+                        <img src="/static/img/on.png" class="img_heart" id="img_btnn" style="display: none;">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div>
+                <div class="text-center cth">
+                    {% include "page.html" %}
+                </div>
+                <div class="text-center">
+                    <select class="form-select-sm" name="searchType">
+                        <option value="mid">작성자</option>
+                        <option value="btitle" selected="selected" >제목</option>
+                    </select>
+                    <input type="text" name="searchValue" id="searchValue">
+                    <input type="submit" value="search" class="btn btn-info">
+                    <input type="button" class="btn btn-danger" value="write" onclick="location='boardWrite'" class="btn btn-secondary">
+                    {% for e in countv %}
+                    <input type="text" value="111111111111111111111111111111">
+                    {% endfor %}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+
+   $(document).ready(function(){
+        let arr = [1,2,3];
+        for(let j = 0; j < arr.length; j++){
+            console.log(arr[j]);
+        }
+
+        //let arr = [1,2,3];
+        //arr.each(function(index, el){
+        //    console.log(el);
+        //});
+
+        var i = jQuery('#img_btnn').attr("src");
+        $('.img_heart').click(function(e){
+            //alert($(this).attr("src"));
+            //alert($(this).prop('id')); prop : 요소의 값을 받아오는 함수
+
+            if ($(this).attr("src") == i) {
+                //alert($(this).prop('id'));
+
+                location = 'jjim?bnum='+$(this).prop('id')
+                $(this).attr("src", "/static/img/off.png");
+            } else {
+                location = 'jjim?bnum='+$(this).prop('id')
+                $(this).attr("src", "/static/img/on.png");
+            }
+        });
+   });
+
+</script>
+{% endblock content %}

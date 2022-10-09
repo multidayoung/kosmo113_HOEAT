@@ -1,0 +1,66 @@
+{% extends "body.html" %}
+
+{% block content %}
+<style>
+.login {width:400px; margin:0 auto; padding:15px 20px; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.2);}
+.login input {width:100%; padding:6px;}
+.login .contain {margin-bottom:10px;}
+#newPwd2 { width:78%;}
+.login input#chkBtn { width:20%;}
+.login p {text-align:left; font-weight:bold;}
+</style>
+
+<div>
+    <div class="text-center">
+        <h3>비밀번호 변경</h3>
+    </div>
+    <div class="login">
+        <form class="form auth__form text-center" action="changePwd" method="post" onsubmit="return submitCheck();">
+            {% csrf_token %}
+            <input type="hidden" id="checkChar" value="2132189sd9fdsj">
+             <ul class="contain">
+                <li>
+                    <p>새 비밀번호 :</p>
+                    <input class="input input--text" id='newPwd' name="newPwd" type="password" placeholder="새 비밀번호 입력">
+                </li>
+            </ul>
+            <ul class="contain">
+                <li>
+                    <p>새 비밀번호 확인:</p>
+                    <input class="input input--text" id='newPwd2' name="newPwd2" type="password" placeholder="새 비밀번호 확인">
+                    <input type="button" value="비번확인" class="check" id="chkBtn">
+                </li>
+            </ul>
+            <input type="hidden" id="id", name="id" value="{{member_id}}">
+            <div>
+                <input type="submit" value="확인">
+            </div>
+        </form>
+        <div class="text-center" id="checkText"></div>
+    </div>
+</div>
+<script>
+var pwdCheck = false;
+$(function(){
+    $('#chkBtn').click(function(){
+        var pwd1 = document.getElementById('newPwd').value;
+        var pwd2 = document.getElementById('newPwd2').value;
+        if(pwd1 != pwd2 || pwd1==""){
+            alert('비밀번호가 일치하지 않습니다.');
+            pwdCheck = false;
+        }else{
+            alert('비밀번호가 일치합니다.');
+            pwdCheck = true;
+        }
+    });
+});
+
+function submitCheck(){
+    if(pwdCheck){
+        return true;
+    }else{
+        return false;
+    }
+}
+</script>
+{% endblock content%}

@@ -1,0 +1,64 @@
+{% extends 'body.html' %}
+{% block content %}
+<div id="content" class="container mt-5">
+    <h1 class="text-center">Week Hot Keyword</h1>
+    <div class="row">
+        <form action="boardChart" method="post">
+            {% csrf_token %}
+            <label>날짜 설정 </label><br>
+            <div style="padding-left:10px;">
+            시작 날짜 : <input type="date" name="bdate" id="bdate" value="{{stoday}}"><br>
+            끝 날짜 : <input type="date" name="edate" id="edate" value="{{ttoday}}"><br>
+            <input type="submit" value="차트 재설정">
+            </div>
+        </form>
+      <div id="chart_donut">
+
+      </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+        var objTest = [];
+        function sampleMakeArray(){
+            {% for e in wordv_cnt_totalList %}
+                objTest.push(['{{e.0}}',{{e.1}}]);
+            {% endfor %}
+            console.log(typeof(objTest));
+            console.log(objTest.length);
+        }
+
+        $(function(){
+            sampleMakeArray();
+            var chart = c3.generate({
+                bindto: '#chart_donut',
+                data: {
+                    columns: objTest,
+                    type : 'donut',
+                    onclick: function (d, i) {
+                        location='boardList?searchValue='+d.id;
+                      },
+                    onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+                    onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+          }
+          });
+        });
+
+
+        let today = new Date();
+        let year = today.getFullYear();
+        // 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+        let month = today.getMonth() + 1
+        let date = today.getDate(); // 일
+        let syear = today.getFullYear - 1;
+        let ttoday = year + '-' + '0'+month + '-' + date
+        let stoday = syear + '-' + '0'+month + '-' + date
+        console.log(stoday);
+        console.log(ttoday);
+
+        $(function(){
+            $('#bdate').attr('placeholder',stoday)
+            $('#edate').attr('placeholder',ttoday)
+        })
+</script>
+{% endblock content %}

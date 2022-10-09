@@ -1,0 +1,51 @@
+{% extends 'body.html'%}
+{% block content %}
+<style>
+
+
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Navbar -->
+            <!-- Navbar -->
+            <div class="block">
+                <form method="get" id="charForm" action="" class="form">
+                    <select name="param" class="form-select" id="param" aria-label="Default select example"
+                            style="display: inline-block;">
+                        <option id="sumOrAvgDefault" value="default" selected>사람들은 어떤 카테고리를 많이 볼까요?</option>
+                        <option value="sum">카테고리 별 총 조회수</option>
+                        <option value="avg">카테고리 별 평균 조회수</option>
+                    </select>
+                    <input type="button" id="viewSubmit" class="btn btn-info" value="조회">
+                </form>
+                <div id="target">
+                    {% include 'ranking/chartRankCateAj.html' %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+    $(function(){
+        $('#viewSubmit').click(function(){
+            console.log($('#param').val())
+            if($('#param').val() == "default"){
+                confirm("메뉴를 선택하세요");
+                $('#sumOrAvgDefault').focus();
+            }else{
+                var param = $('#param').val();
+                var dateRange = $('#dateRange').val();
+                $.ajax({
+                    url: "cateHitRanking?param="+param+"&dateRange="+dateRange,
+                    success: function(data){
+                        console.log(data)
+                        $('#target').html(data)
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    {% endblock content %}

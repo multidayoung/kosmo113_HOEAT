@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    <input type="hidden" id="checkChar">
+    <input type="email" placeholder="이메일을 입력해주세요" id="sendEmail"><input type="button" class="confirmBtn" value="전송">
+    <input type="text" placeholder="확인 문자를 입력해주세요" id="inputText"><input type="button" class="confirmBtn2" value="확인">
+    <input type="text" readonly="readonly" value="" id="checkText">
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+        $(document).ready(function(){
+            $('.confirmBtn').click(function(){
+                $.ajax({
+                    type: "GET",
+                    url:"msgCheck",
+                    data:{"sendEmail" : $('#sendEmail').val()},
+                    success : function(result){
+                        $('#checkChar').val(result);
+                    },
+                    error : function(a, b, c){
+                        alert(a + b + c);
+                    }
+                });
+            });
+            $('.confirmBtn2').click(function(){
+                if($('#checkChar').val()==$('#inputText').val()){
+                $('#checkText').val('인증되었습니다');
+                }
+                else{
+                $('#checkText').val('인증 실패했습니다');
+                }
+            });
+
+        });
+</script>
+</body>
+</html>

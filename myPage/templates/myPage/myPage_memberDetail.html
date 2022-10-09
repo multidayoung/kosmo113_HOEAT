@@ -1,0 +1,134 @@
+{% extends "myPageBody.html" %}
+
+{% block content %}
+{% load static %}
+<style>
+.register {width:600px; margin:0 auto; padding:15px 20px; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.2);}
+.register input {width:100%; padding:6px;}
+.register input[type=date] {line-height:18px;}
+.register input[type=button] {width:auto;}
+.register .center {display:flex; align-items:center;}
+.register .flex .contain {display:grid; grid-template-columns:1fr 3fr; margin-bottom:10px;}
+.register .flex .contain .item .check {height:100%; margin-left:10px; padding:5px 15px; background:#FF4F02; border:none; color:white; font-size:12px;}
+.register .flex .contain .item select {height:36px; padding:6px;}
+.register .submit {width:100%; height:36px; color:white; border:none; background:#FF4F02;}
+a{cursor:pointer;}
+</style>
+<link rel="stylesheet" href="{% static 'css/mypage.css' %}">
+<div id="content" class="mt-5" style="padding : 50px 0 0 0;">
+    <div class="row">
+        <div class="register">
+            <form method="post" action="memberUpdate" class="memberIn">
+                {% csrf_token %}
+                <div class="flex">
+                    <ul class="contain">
+                        <li class="item center">아이디</li>
+                        <li class="item">
+                            <input type="text" name="member_id" id="member_id" value="{{detail.0}}" readonly="readonly">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">이름</li>
+                        <li class="item">
+                            <input type="text" name="mname" id="mname" value="{{detail.2}}" readonly="readonly">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">
+                            생년월일
+                        </li>
+                        <li class="item">
+                            <input type="date" name="mbirth" id="mbirth">
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">
+                            성별
+                        </li>
+                        <li class="item">
+                            <select name="mgender" id="mgender">
+                                <option value="남자" id="남자">남자</option>
+                                <option value="여자" id="여자">여자</option>
+                            </select>
+                        </li>
+                    </ul>
+                    <ul class="contain">
+                        <li class="item center">이메일</li>
+                        <li class="item">
+                            <input type="email" name="memail" id="sendEmail"  value="{{detail.5}}" readonly="readonly">
+                        </li>
+                    </ul>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+  <div class="delete1">
+      <div class="dropMember" style="float:left;">
+        <a onclick="openWindowPop('dropMember?member_id={{detail.0}}','popup')">회원탈퇴</a>
+      </div>
+      <div class="dropMember"  style="float:right;margin:0 5px 0 5px;">
+          <a hidden="hidden" id="updateCancle">취소</a>
+      </div>
+      <div class="dropMember"  style="float:right;margin:0 5px 0 5px;">
+          <a hidden="hidden" id="updateDone">수정 완료</a>
+      </div>
+      <div class="dropMember"  style="float:right;margin:0 5px 0 5px;">
+          <a onclick="openWindowPop('pwdCheck?member_id={{detail.0}}','popup')" id="update">수정</a>
+      </div>
+  </div>
+
+    <script>
+
+        var birth = {{detail.3}};
+        birth = birth.toString();
+        year = birth.substr(0,4);
+        month = birth.substr(4,2);
+        day = birth.substr(6,2);
+
+        birth = year+"-"+month+"-"+day;
+
+
+
+        function openWindowPop(url,name){
+        var options = 'width=500,height=400;';
+        window.open(url,name,options);
+        }
+        $(document).ready(function(){
+        $('.member-deatil').addClass('activated');
+        $('#mbirth').val(birth);
+        $('#mbirth').attr('readonly','readonly');
+
+        $('#{{detail.4}}').attr('selected', 'selected');
+        $('#mgender').attr('disabled','disabled');
+        });
+
+        window.onload = function(){
+        var hei = $('#contents_area').css('height');
+        $('#right_area').css('height',hei);
+
+
+        }
+        $('#updateCancle').click(function(){
+        if(confirm('수정을 취소하시겠습니까?')){
+            $('#updateCancle').attr('hidden','hidden');
+            $('#updateDone').attr('hidden','hidden');
+            $('#update').removeAttr('hidden');
+            $('#mname').val("{{detail.2}}");
+            $('#mbirth').val(birth);
+            $('#sendEmail').val("{{detail.5}}");
+            $('#mname').attr('readonly','readonly');
+            $('#mbirth').attr('readonly','readonly');
+            $('#sendEmail').attr('readonly','readonly');
+        }
+        });
+         $('#updateDone').click(function(){
+         if(confirm('입력한 내용으로 변경하시겠습니까?')){
+            $('.memberIn').submit();
+            }
+         });
+
+    </script>
+{% endblock content%}

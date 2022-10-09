@@ -1,0 +1,30 @@
+<div id="chart_donut">
+
+</div>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+<script>
+    var titleMsg = "";
+  if("{{sumOrAvg}}" === "sum"){
+    titleMsg = "카테고리 별 총 조회수";
+  }else{
+    titleMsg = "카테고리 별 평균 조회수";
+  }
+  var objectTest = [];
+  {% for cate, hit in hitChart %}
+    objectTest.push(['{{cate}}',{{hit}}]);
+  {% endfor %}
+  var chart = c3.generate({
+    bindto : '#chart_donut',
+    data: {
+        columns: objectTest,
+        type : 'donut',
+        onclick: function (d, i) { console.log("onclick", d, d.id, i); location="/ranking/rankingmain?cate="+d.id},
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    },
+    donut: {
+        title: titleMsg
+    }
+});
+</script>

@@ -1,0 +1,20 @@
+{% extends 'body.html' %}
+{% block content %}
+<script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
+<div id="content" class="container mt-5">
+  <h2 class="text-center">Recipe Board</h2>
+  <div class="row">
+      <div id="editor">
+        <p>This is some sample content.</p>
+      </div>
+        <script>
+            ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+        </script>
+  </div>
+</div>
+
+{% endblock content %}

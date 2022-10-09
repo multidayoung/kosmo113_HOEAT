@@ -1,0 +1,7 @@
+1. conda 환경 켜기
+2. pip install django
+3. pip install django-summernote
+4. pip install cx_Oracle
+5. pip install python-dateutil
+5. pip install konlpy
+6. config/models.py 에 ip주소를 본인의 윈도우ip 주소 확인해서 넣기

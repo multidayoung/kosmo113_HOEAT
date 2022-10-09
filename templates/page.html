@@ -1,0 +1,56 @@
+{% comment %}
+has_previous 이전 페이지 유무
+previous_page_number 이전 페이지 번호
+paginator.page_range 페이지 리스트 [1,2,3]
+has_next 다음 페이지 유무
+next_page_number 다음 페이지 번호
+page_obj 페이지 처리된 객체
+num_pages :?
+{% endcomment %}
+
+<div class="row">
+  <div class="col-12">
+    <nav class="container mt-3">
+      <!--  justify-content-end : 오른쪽 끝으로 보내기, justify-content-center : 가운데로 보내기-->
+      <ul class="pagination justify-content-center">
+        {% comment %}
+          이전 페이지 영역 시작
+        {% endcomment %}
+
+        {% if startPage < 6 %}
+        <li class="page-item disabled"><a href="#" class="page-link">이전</a></li>
+        {% else %}
+        <li class="page-item"><a href="?page={{startplus}}&searchValue={{searchValue}}&searchType={{searchType}}" class="page-link">이전</a></li>
+        {% endif %}
+
+        {% comment %}
+          이전 페이지 영역 끝
+        {% endcomment %}
+      <!-- 페이지 반복 시작
+      page_number : page_range에서 출력한 페이지 번호
+      -->
+
+          <!-- 현재 페이지 -->
+        {% for page_number in list.paginator.page_range %}
+        {% if page_number >= startPage and page_number <= endPage %}
+          {% if page_number == list.number %}
+          <li class="page-item disabled"><a href="{{page_number}}" class="page-link">{{page_number}}</a></li>
+          {% else %}
+          <li class="page-item"><a href="?page={{page_number}}&searchValue={{searchValue}}&searchType={{searchType}}" class="page-link">{{page_number}}</a></li>
+          {% endif %}
+         {% endif %}
+        {% endfor %}
+
+        <!-- 페이지 반복 끝 -->
+        <!-- next Page -->
+        {% if endPage >= totalPage %}
+        <li class="page-item disabled"><a href="#" class="page-link">다음</a></li>
+        {% elif totalPage > npagePerBlock %}
+        <li class="page-item"><a href="?page={{endplus}}&searchValue={{searchValue}}&searchType={{searchType}}" class="page-link">다음</a></li>
+        {% else %}
+        <li class="page-item"><a href="?page={{list.next_page_number}}&searchValue={{searchValue}}&searchType={{searchType}}" class="page-link">다음</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+</div>

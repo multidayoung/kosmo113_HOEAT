@@ -1,0 +1,12 @@
+<ul class="most_search">
+    {% for rankN, rankObject in searchRankList %}
+    <li>
+        <div class="best_cont">
+            <p class="ranking_num st2">
+                <b>{{rankN}}</b>
+            </p>
+            <a href="/recipeBoard/boardList?page=1&searchValue={{rankObject.snouns}}&searchType={{rankObject.sType}}">{{rankObject.snouns}}</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>

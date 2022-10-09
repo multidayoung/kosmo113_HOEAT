@@ -1,0 +1,304 @@
+<style>
+.recipe_ranking li > *{
+    text-align: left;
+}
+
+/* recipeAjax */
+.recipe_ranking {
+    margin: 0;
+    vertical-align: top;
+}
+.recipe_ranking li {
+    width: 250px;
+}
+
+.best_rcp_list_li {
+    list-style: none;
+    padding: 0;
+    margin: 0 12px 40px 0;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    height: 330px;
+}
+.best_rcp_list_li .ranking_num.st1 {
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    z-index: 100;
+}
+
+.best_rcp_list_li .ranking_num {
+    background: #fff;
+    border: 1px solid #bbb;
+    -webkit-box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+    min-width: 36px;
+    text-align: center;
+    border-radius: 4px;
+    line-height: 1;
+    padding: 8px 7px 10px;
+    letter-spacing: -0.03em;
+    vertical-align: unset;
+}
+
+.best_rcp_thumb {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.caption_title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 1.5;
+}
+
+.best_rcp_caption {
+    padding: 10px 2px;
+}
+.best_rcp_caption_rv_name {
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
+    vertical-align: 0;
+    padding: 0  1px 7px 0;
+    font-weight: 300;
+}
+.best_rcp_caption_rv {
+    vertical-align: super;
+    line-height: 1;
+    margin: 0 0 9px 0;
+}
+.best_rcp_caption_rv_star {
+    vertical-align: 1px;
+}
+.best_rcp_caption_buyer {
+    color: #999;
+    font-size: 13px;
+    margin-left: 2px;
+    font-weight: 300;
+}
+.best_rcp_caption_rv_ea {
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 12px;
+    vertical-align: middle;
+    padding-left: 1px;
+    line-height: normal;
+    font-weight: 300;
+}
+
+table th {
+    text-align: center;
+    border-right: 1px solid #e6e7e8;
+    border-bottom: 1px solid #e6e7e8;
+    border-top: 1px solid #e6e7e8;
+}
+table td {
+    border-bottom: 1px solid #e6e7e8;
+    border-top: 1px solid #e6e7e8;
+}
+colgroup {
+    display: table-column-group;
+}
+col{
+    display: table-column;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-top-color: inherit;
+    border-right-color: inherit;
+    border-bottom-color: inherit;
+    border-left-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-top-color: inherit;
+    border-right-color: inherit;
+    border-bottom-color: inherit;
+    border-left-color: inherit;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+.rcp_m_cate table th span {
+    color: #ff530a;
+    display: block;
+    font-weight: 500;
+    margin: 0 5px 0 0;
+    text-align: center;
+    padding-top: 6px;
+    vertical-align: middle;
+    font-size: 15px;
+    height: 41px;
+    width: 100%;
+    padding-top: 12px;
+}
+.rcp_category.st3 {
+    background: #fff;
+    padding: 16px 15px 8px 12px;
+    vertical-align: top;
+    margin-top: 0;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+}
+.rcp_category .cate_list {
+    font-size: 15px;
+    padding: 8px 0;
+    line-height: 1;
+    height: 41px;
+}
+.rcp_category .cate_list a.active {
+    color: #fff;
+    background: #ff530a;
+    margin: 0;
+    border-radius: 16px;
+}
+.rcp_category .cate_list a {
+    padding: 3px 8px 4px;
+    color: black;
+    vertical-align: middle;
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 300;
+}
+
+
+</style>
+<script>
+    $(function(){
+        if("{{cate}}" != "식"){
+            $('#TotalCook').attr('class','');
+            if("{{cate}}" == "한식"){
+                $('#KorCook').attr('class','active');
+            }
+            else if("{{cate}}" == "양식"){
+                $('#WestCook').attr('class','active');
+            }
+            else if("{{cate}}" == "중식"){
+                $('#ChiCook').attr('class','active');
+            }
+            else{
+                $('#JapCook').attr('class','active');
+            }
+        }
+        $('#TotalCook').click(function(){
+            $(this).attr('class','active');
+            $('#KorCook').attr('class','');
+            $('#WestCook').attr('class','');
+            $('#ChiCook').attr('class','');
+            $('#JapCook').attr('class','');
+            console.log('zzz');
+            $.ajax({
+                url: "rankingRecipeCate?cate=식",
+                success: function(data){
+                    console.log(data)
+                    $('#rankingAjCate').html(data)
+                }
+            });
+        });
+        $('#KorCook').click(function(){
+            $('#TotalCook').attr('class','');
+            $(this).attr('class','active');
+            $('#WestCook').attr('class','');
+            $('#ChiCook').attr('class','');
+            $('#JapCook').attr('class','');
+            console.log('zzz');
+            $.ajax({
+                url: "rankingRecipeCate?cate=한식",
+                success: function(data){
+                    console.log(data)
+                    $('#rankingAjCate').html(data)
+                }
+            });
+        });
+        $('#WestCook').click(function(){
+            $('#TotalCook').attr('class','');
+            $('#KorCook').attr('class','');
+            $(this).attr('class','active');
+            $('#ChiCook').attr('class','');
+            $('#JapCook').attr('class','');
+            console.log('zzz');
+            $.ajax({
+                url: "rankingRecipeCate?cate=양식",
+                success: function(data){
+                    console.log(data)
+                    $('#rankingAjCate').html(data)
+                }
+            });
+        });
+        $('#ChiCook').click(function(){
+            $('#TotalCook').attr('class','');
+            $('#KorCook').attr('class','');
+            $('#WestCook').attr('class','');
+            $(this).attr('class','active');
+            $('#JapCook').attr('class','');
+            console.log('zzz');
+            $.ajax({
+                url: "rankingRecipeCate?cate=중식",
+                success: function(data){
+                    console.log(data)
+                    $('#rankingAjCate').html(data)
+                }
+            });
+        });
+        $('#JapCook').click(function(){
+            $('#TotalCook').attr('class','');
+            $('#KorCook').attr('class','');
+            $('#WestCook').attr('class','');
+            $('#ChiCook').attr('class','');
+            $(this).attr('class','active');
+            console.log('zzz');
+            $.ajax({
+                url: "rankingRecipeCate?cate=일식",
+                success: function(data){
+                    console.log(data)
+                    $('#rankingAjCate').html(data)
+                }
+            });
+        });
+    });
+    /*setTimeout(() => {
+        if($('.cate_list > a').)
+    },100);*/
+
+
+</script>
+<div style="position: relative;">
+    <table cellspacing="0" cellpadding="0" width="1124px" style="border-spacing: 0; border-collapse: collapse;">
+        <colgroup>
+            <col width="100px">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th><span>카테고리</span></th>
+            <td>
+                <div class="rcp_category st3">
+                    <div class="cate_list">
+                        <a id="TotalCook" class="active">전체</a>
+                        <a id="KorCook">한식</a>
+                        <a id="WestCook">양식</a>
+                        <a id="ChiCook">중식</a>
+                        <a id="JapCook">일식</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div id="rankingAjCate">{% include 'ranking/rankingRecipeAjCate.html' %}</div>

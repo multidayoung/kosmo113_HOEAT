@@ -1,0 +1,74 @@
+<style>
+.most_search > *{
+    text-align: left;
+}
+</style>
+<script>
+    $(function(){
+        $('#TotalSearch').click(function(){
+            $(this).attr('class','active');
+            $('#TitleSearch').attr('class','');
+            $('#WriterSearch').attr('class','');
+            console.log('zzz');
+            $.ajax({
+                url: "rankingSearchRange?sType=",
+                success: function(data){
+                    console.log(data)
+                    $('#rankingSearchAjRange').html(data)
+                }
+            });
+        });
+        $('#TitleSearch').click(function(){
+            $('#TotalSearch').attr('class','');
+            $(this).attr('class','active');
+            $('#WriterSearch').attr('class','');
+            $.ajax({
+                url: "rankingSearchRange?sType=btitle",
+                success: function(data){
+                    console.log(data)
+                    $('#rankingSearchAjRange').html(data)
+                }
+            });
+        });
+        $('#WriterSearch').click(function(){
+            $('#TotalSearch').attr('class','');
+            $('#TitleSearch').attr('class','');
+            $(this).attr('class','active');
+            $.ajax({
+                url: "rankingSearchRange?sType=mid",
+                success: function(data){
+                    console.log(data)
+                    $('#rankingSearchAjRange').html(data)
+                }
+            });
+        });
+    });
+    /*setTimeout(() => {
+        if($('.cate_list > a').)
+    },100);*/
+</script>
+<div style="position: relative;">
+    <table cellspacing="0" cellpadding="0" width="1124px" style="border-spacing: 0; border-collapse: collapse;">
+        <colgroup>
+            <col width="100px">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th><span>분류</span></th>
+            <td>
+                <div class="rcp_category st3">
+                    <div class="cate_list">
+                        <a id="TotalSearch" class="active">전체</a>
+                        <a id="TitleSearch">제목</a>
+                        <a id="WriterSearch">작성자</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div id="rankingSearchAjRange">
+    {% include 'ranking/rankingSearchAjRange.html' %}
+</div>

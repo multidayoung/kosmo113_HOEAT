@@ -1,0 +1,36 @@
+{% include "header.html" %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/mypage.css' %}">
+<style>
+
+</style>
+<div class="container">
+<div id="contents_area" style="height:auto;">
+    <div id="popMenu">
+        <ul class="nav nav-tabs">
+          <li class="nav-item recipe">
+              <a class="nav-link" aria-current="page" href="recipeList"><span><img src="{% static 'images/cook.png' %}"></span>레시피</a>
+          </li>
+          <li class="nav-item review">
+             <a class="nav-link" href="reviewList"><span><img src="{% static 'images/comment.png' %}"></span> 댓글</a>
+          </li>
+          <li class="nav-item jjim">
+            <a class="nav-link" href="jjimList"><span><img src="{% static 'images/jjim.png' %}"></span>찜 목록</a>
+          </li>
+          <li class="nav-item member-deatil">
+            <a class="nav-link" href="detail"><span><img src="{% static 'images/people.png' %}"></span>회원정보</a>
+          </li>
+        </ul>
+    </div>
+    {% block content %}
+
+    {% endblock content%}
+</div>
+<!-- height 설정 -->
+
+<div id="right_area">
+</div>
+
+</div>
+{% include "footer.html" %}

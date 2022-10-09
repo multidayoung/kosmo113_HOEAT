@@ -1,0 +1,87 @@
+
+<!-- tiles 상속 -->
+{% extends "body.html" %}
+<!-- content -->
+{% block content %}
+<div id="content" class="container mt-5">
+    <div class="row container">
+        <h1 style="text-align: center">최근 5일간 체류 시간</h1>
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+
+<script>
+    var objArr1 = [];
+    var objArr2 = [];
+    var objArr3 = [];
+    var objArr4 = [];
+    var objArr5 = [];
+    var objArr6 = [];
+    var count=0;
+    var objList = [objArr2,objArr3,objArr4,objArr5,objArr6];
+    {% for arr1, arrList in chart %}
+        objArr1.push("{{arr1}}");
+        {% for list in arrList %}
+            objList[count].push("{{list}}");
+            count+=1;
+        {% endfor %}
+        count=0;
+    {% endfor %}
+
+
+
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: objArr1,
+        datasets: [{
+            label: '1~10 sec',
+            data: objArr2,
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            borderWidth: 2
+        },{
+            label: '11~30 sec',
+            data: objArr3,
+            backgroundColor: 'rgb(54, 162, 235)',
+            borderColor: 'rgb(54, 162, 235)',
+            borderWidth: 2
+        },{
+            label: '30~60 sec',
+            data: objArr4,
+            backgroundColor: 'rgb(255, 206, 86)',
+            borderColor: 'rgb(255, 206, 86)',
+            borderWidth: 2
+        },{
+            label: '60~ sec',
+            data: objArr5,
+            backgroundColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(75, 192, 192)',
+            borderWidth: 2
+        },{
+            label: '페이지 평균 이동 횟수',
+            data: objArr6,
+            backgroundColor: 'rgb(153, 102, 255)',
+            borderColor: 'rgb(153, 102, 255)',
+            borderWidth: 5
+        }
+        ]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100,
+                min: 0,
+                stepSize: 10
+            }
+        }
+    }
+});
+
+</script>
+{% endblock content%}

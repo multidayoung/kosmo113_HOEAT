@@ -1,0 +1,83 @@
+{% extends "myPageBody.html" %}
+
+{% block content %}
+{% load static %}
+{% load filters %}
+<link rel="stylesheet" href="{% static 'css/mypage.css' %}">
+<div class="jjimPage">
+
+        {% if List is not None %}
+
+            <div class="jjimlayout">
+                                {% for i in List %}
+
+                <div class="recipe_detail">
+                    <div class="recipe_ImgDiv">
+                    <div style="font-size:1.5em"><img src="{% static 'images/header.jpg' %}" class="img-thumbnail"></div>
+                    </div>
+                    <div class="recipe_content" style="position:relative; height:250px;">
+
+                    <a href="/recipeBoard/commDetail?bnum={{i.0}}" style="text-decoration: none; ">
+                    <div class="recipe_content" style="position:relative; height:250px;">
+                        <span style="font-size:2em; padding:0 0 0 10px">{{i.2}}</span><br>
+                        <span style="position:absolute;bottom:0;">카테고리 : {{i.7}}</span>
+                    <div style="text-align:right; position:absolute; right:0; bottom:0;">{{i.8}}</div>
+                    </div>
+                    </a>
+
+                        <div style="text-align:right; position:absolute; right:0; top:-20px;" class="jjimImg">
+                        {% for value in i.9|ranges %}
+                        <img src="{% static 'images/star.png' %}">
+                        {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+
+                {% endfor %}
+            </div>
+            <div class="pageClass" style="text-align:center">
+                <form>
+                {% include "myPage_paging.html" %}
+                </form>
+            </div>
+    {% elif List is None and searchValue != "" %}
+            <div class="result-None">
+            <img src="{% static 'images/noSearch.png' %}">
+            <p class="recipe-None">
+                검색 결과가 존재하지 않습니다..
+                <br>
+                다시 검색해주세요!
+            </p>
+        </div>
+        <div class="pageClass" style="text-align:center">
+            <form action="jjimList" method="POST">
+                {% include "myPage_paging.html" %}
+            </form>
+        </div>
+    {% elif List is None %}
+    <div class="result-None">
+        <img src="{% static 'images/noCook.png' %}">
+        <p class="reviewP">
+            저장해둔 찜목록이 없어요 !
+            <br>
+            레시피를 둘러보시고 맘에 든 레시피를 찜해보세요!
+        </p>
+    </div>
+
+{% endif %}
+
+</div>
+    <script>
+        $(document).ready(function(){
+        $('.jjim').addClass('activated');
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        window.onload = function(){
+        var hei = $('#contents_area').css('height');
+        $('#right_area').css('height',hei);
+        }
+    </script>
+{% endblock content%}

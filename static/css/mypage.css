@@ -1,0 +1,171 @@
+#right_area{
+border-top:1px solid #e6e7e8;
+width: 335px;
+margin-left:10px;
+padding:0 0 30px 0;
+height:auto;
+float:left;
+background-color:pink;
+}
+#contents_area{
+border:1px solid #e6e7e8;
+width: 792px;
+padding : 0 0 20px 0;
+float:left;
+}
+.nav-tabs>li{
+width:197px;
+text-align:center;
+display:inline-block;
+background-color:#ddd;
+}
+.nav-tabs>li>a{
+font-size:20px;
+color:black;
+
+}
+.nav-tabs>li>a>span>img{
+height:40px;
+width:40px;
+float:left;
+box-sizing:border;
+}
+.nav-tabs > .activated{
+background-color:pink;
+}
+.jjimPage{
+padding : 5px 30px 0 30px;
+margin-bottion:8px;
+}
+.result-None{
+padding:40px 0;
+text-align:center;
+color:#999;
+font-size:16px;
+line-height:26px;
+}
+.jjimlayout{
+padding:30px 30px 0 0px;
+width:100%;
+display:flex;
+flex-direction:column;
+gap:50px;
+}
+.reviewMenu{
+margin:30px 30px -15px;
+border-bottom:1px solid #ddd;
+padding-left:0;
+}
+.reviewMenu a{
+display:inline-block;
+padding:10px 35px;
+background:#fff;
+font-size:16px;
+color:#c1a9a9;
+}
+.reviewMenu .activated{
+border-top:1px solid #ddd;
+border-right:1px solid #ddd;
+border-left:1px solid #ddd;
+border-bottom:1px solid #fff;
+font-weight:bold;
+color:#000;
+}
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+}
+.input-group > .form-control,
+.input-group > .form-select {
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+}
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+.reviewContainer{
+padding:30px 30px 0 30px;
+}
+*{
+box-sizing:border-box;
+}
+.noReview{
+  padding:50px 0;
+  text-align: center;
+}
+div{
+display:block;
+}
+.reviewOneDiv .reviewDetailDiv div img{
+height:20px;
+width:20px;
+}
+.reviewDetailDiv{
+margin-bottom:20px;
+radius:5px;
+border:1px solid black;
+}
+.reviewOneDiv{
+padding:10px 0 20px 0;
+
+}
+.home_recipe{
+height:auto;
+padding:30px 30px 10px 10px;
+}
+.recipe_ImgDiv{
+padding:0 15px 0 0;
+height:auto;
+width:auto;
+float:left;
+display:block;
+}
+.home_recipe .recipe_detail .recipe_ImgDiv img,.recipe_detail .recipe_ImgDiv img{
+height:250px;
+width:300px;
+}
+.recipe_detail{
+height:350px;
+padding : 0 0 0 20px;
+}
+.recipe_title{
+padding:15px 0 10px 0;
+text-align:center;
+}
+.reviewP,.recipe-None{
+display:block;
+margin-top:20px;
+}
+.delete1{
+padding : 24px 18px 0 18px;
+}
+.delete1 .dropMember a{
+color:gray;
+}
+.result-None img{
+height:256px;
+width:256px;
+}
+.jjimImg img{
+height:20px;
+width:20px;
+}

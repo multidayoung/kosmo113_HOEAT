@@ -1,0 +1,66 @@
+{% extends "body.html" %}
+
+{% block content %}
+<style>
+.login {width:400px; margin:0 auto; padding:15px 20px; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.2);}
+.login input {width:100%; padding:6px;}
+.login .contain {margin-bottom:10px;}
+.item p {text-align:left; font-weight:bold;}
+</style>
+
+<div>
+    <div class="text-center">
+        <h3>아이디 찾기</h3>
+    </div>
+    <div class="login">
+        <form class="form auth__form text-center">
+            {% csrf_token %}
+            <ul class="contain">
+                <li class="item">
+                    <p>이름</p>
+                    <input class="input input--text" id='member_name' type="text" name="member_name">
+                </li>
+            </ul>
+            <ul class="contain">
+                <li class="item">
+                    <p>이메일</p>
+                    <input class="input input--text" id="member_email" type="email" name="member_email">
+                </li>
+            </ul>
+            <ul class="contain">
+                <li class="item">
+                    <input class="btn btn--sub btn-0lg" type="button" id="findId" value="아이디 찾기">
+                </li>
+            </ul>
+            <ul>
+                <li id="target"></li>
+            </ul>
+        </form>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+     $(function(){
+        $('#findId').click(function(){
+        let senddata = "member_name="+$('#member_name').val()+"&member_email="+$('#member_email').val();
+        console.log(senddata);
+             $.ajax({
+                type: 'post',
+                url: 'forgotId',
+                data: senddata,
+                dataType: 'html',
+                success:function(data){
+                    console.log('data =>'+data);
+                    if(data === 'None'){
+                      $('#target').html('일치하는 아이디가 없습니다.');
+                      $('#target').css('color','red');
+                    }else{
+                      $('#target').html("당신의 아이디는 '"+data+"' 입니다.");
+                      $('#target').css('color','blue');
+                    }
+                }
+             });
+        });
+    });
+</script>
+{% endblock content%}

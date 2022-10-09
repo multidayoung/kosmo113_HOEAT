@@ -1,0 +1,165 @@
+{% extends 'body.html' %}
+{% block content %}
+<style>
+    tbody > tr, tbody > td {
+        width:50px;
+    }
+    img {
+        width: auto;
+        max-width: 100%;
+    }
+    .btnColor {
+        background-color: #FF4F02;
+        color:#fff;
+    }
+    .btnColor: hover {
+        color:#fff;
+    }
+</style>
+<div class="container">
+    <form action="boardUpdate" method="post">
+        {% csrf_token %}
+        <table class=" container table table-striped" style="width: 700px;">
+            <tread>
+                <tr>
+                    <th colspan="2" style="text-align:center; font-size:30px;">
+                        <p style="color:#FF4F02; font-weight:bold; font-size:20px;">&lt{{board.7}}&gt</p><br>
+                        {{board.2}}
+                    </th>
+                </tr>
+            </tread>
+            <tbody>
+                <tr>
+                    <td style="width:120px">번호 : &nbsp;{{board.0}}</td>
+                    <td style="text-align:right;">조회수 : {{board.6}} </td>
+                </tr>
+                <tr>
+                    <td>작성자 : {{board.1}} </td>
+                    <td style="text-align:right;">작성날짜 : {{board.8}}</td>
+                </tr>
+                <tr>
+                    <td>완성 사진 : </td>
+                    <td><img src="/static/foodImg/{{board.4}}" id="imgx" style="width:300px; height:300px;"></td>
+                </tr>
+                <tr>
+                    <td>내용 : </td>
+                    <td>{{board.3|safe}}<br></td>
+                </tr>
+                <tr>
+                    <td>재료 : </td>
+                    <td>{{board.5}}<br></td>
+                </tr>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="2">
+                        {% if request.session.member_id == board.1 %}
+                        <input type="button" value="수정하기" onclick="location.href='boardUpdate?bnum={{board.0}}'" class="btn btnColor">
+                        {% endif %}
+                        <input type="button" value="리스트" onclick="location.href='boardList'" class="btn" >
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+
+    <!-- 댓글 작성 폼 -->
+{% if 'member_name' in request.session %}
+<form method="post" action="commDetail">
+    {% csrf_token %}
+    <table class=" container table table-striped" style="width: 700px;">
+        <thead>
+            <tr>
+                <th colspan="3">댓글 내용</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" name="rcont" id="rcont" placeholder="댓글 작성"></input></td>
+                <td>
+                    <select class="form-select" aria-label="Default select example" id="rscore" name="rscore" style="width:160px">
+                      <option value="5" selected>평점을 선택해주세요!</option>
+                      <option value="1">★</option>
+                      <option value="2">★★</option>
+                      <option value="3">★★★</option>
+                      <option value="4">★★★★</option>
+                      <option value="5">★★★★★</option>
+                    </select>
+                </td>
+                <td><input type="submit" value="댓글 작성"></td>
+                <input type="hidden" value="{{board.0}}" name="bnum">
+
+            </tr>
+        </tbody>
+    </table>
+</form>
+{% endif %}
+<!-- 댓글 작성 폼 끝-->
+</div>
+
+<!-- 댓글 리스트 -->
+<div style="width:700px; margin: 0 auto;">
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th colspan="6">댓글 보기</th>
+        </tr>
+        <tr>
+            <th> 작성자 </th>
+            <th> 평점 </th>
+            <th> 내용 </th>
+            <th> 작성날짜 </th>
+            <th>  </th>
+            <th>  </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for e in cvo %}
+    <form action="commUpdate" method="post">
+        {% csrf_token %}
+    <tr>
+        <td>{{e.1}}</td>
+        <td>
+            <select class="form-select" aria-label="Default select example" id="rscore1" name="rscore" style="width:150px">
+                  <option value="{{e.3}}" selected>현재 평점{{e.3}}입니다.</option>
+                  <option value="1">★</option>
+                  <option value="2">★★</option>
+                  <option value="3">★★★</option>
+                  <option value="4">★★★★</option>
+                  <option value="5">★★★★★</option>
+              </select>
+        </td>
+        {% if request.session.member_id == e.1 %}
+        <td>
+            <input type="text" value="{{e.4}}" name="rcont">
+        </td>
+        {% else %}
+        <td>
+            <input type="text" value="{{e.4}}" name="rcont" readonly>
+        </td>
+        {% endif %}
+        <td>{{e.5}}</td>
+        {% if request.session.member_id == e.1 %}
+        <td><input type="submit" value="수정" class="btn btn-info"></td>
+        <td><input type="button" value="삭제" class="btn btn-danger" onclick="location.href='commDelete?bnum={{board.0}}&rnum={{e.0}}'"> </td>
+        {% else %}
+        <td></td>
+        <td></td>
+        {% endif %}
+            <!-- input type="text" name="mid" id="mid" placeholder="ID" -->
+        <input type="hidden" value="{{board.0}}" name="bnum">
+        <input type="hidden" value="{{e.0}}" name="rnum">
+    </tr>
+    </form>
+    {% endfor %}
+
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>
+
+    </div>
+    <!-- 댓글 리스트 끝-->
+
+{% endblock content %}

@@ -1,0 +1,42 @@
+<ul class="recipe_ranking" style="padding: 40px 8px 0 8px; text-align: center;">
+    {% for i in cateRanList %}
+    <li class="best_rcp_list_li" >
+
+        <p class="ranking_num st1" style="position: absolute;
+    left: -4px;
+    top: -4px;
+    z-index: 100; background: #fff;
+    border: 1px solid #7EC3BB;
+    -webkit-box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+    min-width: 36px;
+    text-align: center;
+    border-radius: 4px;
+    line-height: 1;
+    padding: 8px 7px 10px;
+    letter-spacing: -0.03em;
+    vertical-align: unset;
+    ">
+            <b>{{i.0}}</b>
+        </p>
+        <div class="best_rcp_thumb">
+            <a href="/recipeBoard/commDetail?bnum={{i.6}}" class="">
+                <img src="/static/foodImg/{{i.4}}">
+            </a>
+        </div>
+        <div class="best_rcp_caption">
+            <div class="caption_title">{{i.1}}</div>
+            <div class="best_rcp_caption_rv_name" style="display: inline-block; vertical-align: bottom;">
+                <span style="color: #FF5333">
+                    {{i.2}}
+                </span>
+            </div>
+            <div class="best_rcp_caption_rv">
+                <span class="best_rcp_caption_rv_star"><img src="/static/images/staricon.jpeg" style="width: 16px; height: 14px;"></span>
+                <span class="best_rcp_caption_rv_ea">4.5</span>
+                <span class="best_rcp_caption_buyer" style="vertical-align: middle;">조회수 {{i.3}}</span>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>

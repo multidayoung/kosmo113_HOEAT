@@ -1,0 +1,327 @@
+{% extends 'body.html' %}
+{% block content %}
+{% load static %}
+<style>
+a:hover{
+ cursor: pointer;
+}
+
+.navbar-dark .nav-item .nav-link {
+  color: #fff;
+}
+
+.navbar-dark .nav-item .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  border-radius: 0.25rem;
+  color: #fff;
+}
+
+.fa-li {
+  position: relative;
+  left: 0;
+}
+
+ul li div a img{
+width: 250px;
+height: 250px;
+}
+
+
+
+/* searchAjax */
+
+.most_search {
+    overflow: hidden;
+    padding: 4px 20px 20px 88px;
+}
+
+.most_search li {
+    padding: 24px 6px;
+    vertical-align: top;
+    border-bottom: 1px solid #ddd;
+    list-style: none;
+    width: 280px;
+    display: inline-block;
+    margin-right: 60px;
+}
+
+.most_search .best_cont {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 16px;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 500;
+}
+.best_cont .ranking_num {
+    background: #fff;
+    border: 1px solid #7EC3BB;
+    -webkit-box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+    min-width: 36px;
+    text-align: center;
+    border-radius: 4px;
+    line-height: 1;
+    padding: 8px 7px 10px;
+    letter-spacing: -0.03em;
+    vertical-align: unset;
+}
+.most_search .ranking_num {
+    margin-right: 18px;
+    margin-bottom: 0;
+}
+.ranking_num.st2 {
+    display: inline-block;
+}
+.recipe_ranking li > *{
+    text-align: left;
+}
+
+/* recipeAjax */
+.recipe_ranking {
+    margin: 0;
+    vertical-align: top;
+}
+.recipe_ranking li {
+    width: 250px;
+}
+
+.best_rcp_list_li {
+    list-style: none;
+    padding: 0;
+    margin: 0 12px 40px 0;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    height: 330px;
+}
+.best_rcp_list_li .ranking_num.st1 {
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    z-index: 100;
+}
+
+.best_rcp_list_li .ranking_num {
+    background: #fff;
+    border: 1px solid #bbb;
+    -webkit-box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+    min-width: 36px;
+    text-align: center;
+    border-radius: 4px;
+    line-height: 1;
+    padding: 8px 7px 10px;
+    letter-spacing: -0.03em;
+    vertical-align: unset;
+}
+
+.best_rcp_thumb {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.caption_title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 1.5;
+}
+
+.best_rcp_caption {
+    padding: 10px 2px;
+}
+.best_rcp_caption_rv_name {
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
+    vertical-align: 0;
+    padding: 0  1px 7px 0;
+    font-weight: 300;
+}
+.best_rcp_caption_rv {
+    vertical-align: super;
+    line-height: 1;
+    margin: 0 0 9px 0;
+}
+.best_rcp_caption_rv_star {
+    vertical-align: 1px;
+}
+.best_rcp_caption_buyer {
+    color: #999;
+    font-size: 13px;
+    margin-left: 2px;
+    font-weight: 300;
+}
+.best_rcp_caption_rv_ea {
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 12px;
+    vertical-align: middle;
+    padding-left: 1px;
+    line-height: normal;
+    font-weight: 300;
+}
+
+table th {
+    text-align: center;
+    border-right: 1px solid #e6e7e8;
+    border-bottom: 1px solid #e6e7e8;
+    border-top: 1px solid #e6e7e8;
+}
+table td {
+    border-bottom: 1px solid #e6e7e8;
+    border-top: 1px solid #e6e7e8;
+}
+colgroup {
+    display: table-column-group;
+}
+col{
+    display: table-column;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-top-color: inherit;
+    border-right-color: inherit;
+    border-bottom-color: inherit;
+    border-left-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-top-color: inherit;
+    border-right-color: inherit;
+    border-bottom-color: inherit;
+    border-left-color: inherit;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+.rcp_m_cate table th span {
+    color: #ff530a;
+    display: block;
+    font-weight: 500;
+    margin: 0 5px 0 0;
+    text-align: center;
+    padding-top: 6px;
+    vertical-align: middle;
+    font-size: 15px;
+    height: 41px;
+    width: 100%;
+    padding-top: 12px;
+}
+.rcp_category.st3 {
+    background: #fff;
+    padding: 16px 15px 8px 12px;
+    vertical-align: top;
+    margin-top: 0;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+}
+.rcp_category .cate_list {
+    font-size: 15px;
+    padding: 8px 0;
+    line-height: 1;
+    height: 41px;
+}
+.rcp_category .cate_list a.active {
+    color: #fff;
+    background: #ff530a;
+    margin: 0;
+    border-radius: 16px;
+}
+.rcp_category .cate_list a {
+    padding: 3px 8px 4px;
+    color: black;
+    vertical-align: middle;
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 300;
+}
+</style>
+<link rel="stylesheet" href="{% static 'css/board.css' %}">
+<div class="navigation">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Navbar -->
+                <!-- Navbar -->
+                <div class="block">
+                    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light" style="padding-right: 40px">
+                        <!-- Container wrapper -->
+                        <div class="container-fluid">
+                            <!-- Navbar brand -->
+                            <!-- Collapsible wrapper -->
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <!-- Left links -->
+                                <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="recipeRank" aria-current="page"
+                                           style="color: #000">레시피</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="searchRank" style="color: #000">검색어</a>
+                                    </li>
+                                </ul>
+                                <!-- Left links -->
+                                <ul class="navbar-nav navbar-right mb-2 mb-lg-0" style="position: relative;">
+                                    <!-- Navbar dropdown -->
+                                    <li>
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-warning">일간</button>
+                                            <button type="button" class="btn btn-warning">주간</button>
+                                            <button type="button" class="btn btn-warning">월간</button>
+                                            <!-- 클릭한 것만 노란 색 배경이 되도록 -->
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Collapsible wrapper -->
+                        </div>
+                        <!-- Container wrapper -->
+                    </nav>
+                    <!-- Navbar -->
+                    <div id="rankingAj">{% include 'ranking/rankingRecipeAj.html' %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('#recipeRank').click(function(){
+            console.log('zzz');
+            $.ajax({
+                url: "rankingRecipe",
+                success: function(data){
+                    console.log(data)
+                    $('#rankingAj').html(data)
+                }
+            });
+        });
+        $('#searchRank').click(function(){
+            $.ajax({
+                url: "rankingSearch",
+                success: function(data){
+                    $('#rankingAj').html(data)
+                }
+            });
+        });
+    });
+</script>
+{% endblock content %}
