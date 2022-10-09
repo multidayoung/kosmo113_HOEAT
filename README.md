@@ -1,2 +1,2 @@
-# kosmo113_HOEAT
+# HOEAT
 kosmo113 Django Project
